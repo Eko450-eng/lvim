@@ -1,12 +1,23 @@
 --  ╭──────────────────────────────────────────────────────────╮
---  │ -- general                                               │
+--  │ General                                                  │
 --  ╰──────────────────────────────────────────────────────────╯
+
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "tokyo-night"
+lvim.colorscheme = "nord"
 vim.opt.relativenumber = true
+
+vim.opt.autoindent = true
+vim.opt.background = "dark"
+vim.opt.belloff = "esc"
+vim.opt.clipboard = "unnamedplus"
+vim.opt.cmdheight = 1
+
+
 lvim.use_icons = true
 lvim.transparent_window = true
+
+vim.g.godot_executable = "/usr/bin/godot"
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ keymappings [view all the defaults by pressing <leader>Lk]│
@@ -23,6 +34,9 @@ lvim.keys.normal_mode["<leader>bd"] = "<cmd>BufferKill<CR>"
 lvim.keys.normal_mode["<leader>wd"] = ":q<cr>"
 lvim.keys.normal_mode["<leader>gc"] = "<Plug>(comment_toggle_linewise_current)"
 lvim.keys.normal_mode["<leader>bc"] = ":CBlbox<cr>"
+
+lvim.keys.normal_mode["|"] = ":vsplit<cr>"
+lvim.keys.normal_mode["-"] = ":hsplit<cr>"
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ unmap a default keymapping                               │
@@ -204,6 +218,18 @@ lvim.plugins = {
   { 'SirVer/ultisnips' },
   { 'arcticicestudio/nord-vim' },
   { 'tpope/vim-surround' },
+  { 'Pocco81/DAPInstall.nvim' },
+  { 'Pocco81/dap-buddy.nvim' },
+  { 'brenoprata10/nvim-highlight-colors' },
+  { 'jakerobers/vim-hexrgba' },
+  { 'alvan/vim-closetag' },
+  { 'windwp/nvim-ts-autotag' },
+  { 'ziontee113/color-picker.nvim' },
+  { 'lambdalisue/suda.vim' },
+  { 'ellisonleao/glow.nvim' },
+  { 'lommix/godot.nvim' },
+  { 'habamax/vim-godot' },
+  { 'neoclide/coc.nvim', },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -211,13 +237,26 @@ lvim.plugins = {
 }
 
 --  ╭──────────────────────────────────────────────────────────╮
+--  │ Plugin config                                            │
+--  ╰──────────────────────────────────────────────────────────╯
+require('nvim-highlight-colors').setup {}
+require('nvim-ts-autotag').setup {}
+
+vim.lsp.start({
+  name = "godot",
+  cmd = vim.lsp.rpc.connect('127.0.0.1', 6008)
+})
+
+--  ╭──────────────────────────────────────────────────────────╮
 --  │ Autocommands (https://neovim.io/doc/user/autocmd.html)   │
 --  ╰──────────────────────────────────────────────────────────╯
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
+--  Change comment color for better readability
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*" },
+  -- enable wrap mode for json files only
+  command = "highlight Comment guifg=lightblue",
+})
+
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "zsh",
 --   callback = function()
