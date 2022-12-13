@@ -34,6 +34,8 @@ lvim.keys.normal_mode["<leader>bd"] = "<cmd>BufferKill<CR>"
 lvim.keys.normal_mode["<leader>wd"] = ":q<cr>"
 lvim.keys.normal_mode["<leader>gc"] = "<Plug>(comment_toggle_linewise_current)"
 lvim.keys.normal_mode["<leader>bc"] = ":CBlbox<cr>"
+lvim.keys.normal_mode["<leader>E"] = ":Telescope find_files <CR>"
+lvim.keys.normal_mode["<leader>B"] = ":Telescope live_grep <CR>"
 
 lvim.keys.normal_mode["|"] = ":vsplit<cr>"
 lvim.keys.normal_mode["-"] = ":hsplit<cr>"
@@ -56,6 +58,24 @@ lvim.keys.normal_mode["-"] = ":hsplit<cr>"
 --  │  just in case the plugin wasn't loaded yet.              │
 --  ╰──────────────────────────────────────────────────────────╯
 local _, actions = pcall(require, "telescope.actions")
+
+require("telescope").load_extension "file_browser"
+require("telescope").load_extension "project"
+
+require("telescope").setup {
+  extensions = {
+    project = {
+      base_dirs = {
+        '~/code',
+      },
+      hidden_files = true, -- default: false
+      theme = "dropdown",
+      order_by = "asc",
+      sync_with_nvim_tree = true, -- default false
+    }
+  }
+}
+
 lvim.builtin.telescope.defaults.mappings = {
   i = {
     ["<C-j>"] = actions.move_selection_next,
@@ -230,6 +250,9 @@ lvim.plugins = {
   { 'lommix/godot.nvim' },
   { 'habamax/vim-godot' },
   { 'neoclide/coc.nvim', },
+  { 'nvim-telescope/telescope-file-browser.nvim' },
+  { 'nvim-telescope/telescope-project.nvim' },
+  { 'tom-anders/telescope-vim-bookmarks.nvim' },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -241,6 +264,11 @@ lvim.plugins = {
 --  ╰──────────────────────────────────────────────────────────╯
 require('nvim-highlight-colors').setup {}
 require('nvim-ts-autotag').setup {}
+require("lspconfig").gdscript.setup {
+  flags = {
+    debounce_text_changes = 150,
+  }
+}
 
 vim.lsp.start({
   name = "godot",
