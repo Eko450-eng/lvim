@@ -17,7 +17,7 @@ vim.opt.cmdheight = 1
 lvim.use_icons = true
 lvim.transparent_window = true
 
-vim.g.godot_executable = "/usr/bin/godot"
+vim.g.godot_executable = "/home/eko/appimg/Godot_v4.0-beta8_linux.x86_64"
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ keymappings [view all the defaults by pressing <leader>Lk]│
@@ -26,7 +26,7 @@ lvim.leader = "space"
 
 lvim.builtin.which_key.mappings.f = nil
 lvim.builtin.which_key.mappings["/"] = nil
-lvim.keys.normal_mode["<leader>w"] = nil
+lvim.keys.normal_mode["<leader>w"] = false
 lvim.keys.normal_mode["<leader>fs"] = ":w<cr>"
 lvim.keys.normal_mode["<M-l>"] = "<cmd>BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<M-h>"] = "<cmd>BufferLineCyclePrev<CR>"
@@ -61,20 +61,6 @@ local _, actions = pcall(require, "telescope.actions")
 
 require("telescope").load_extension "file_browser"
 require("telescope").load_extension "project"
-
-require("telescope").setup {
-  extensions = {
-    project = {
-      base_dirs = {
-        '~/code',
-      },
-      hidden_files = true, -- default: false
-      theme = "dropdown",
-      order_by = "asc",
-      sync_with_nvim_tree = true, -- default false
-    }
-  }
-}
 
 lvim.builtin.telescope.defaults.mappings = {
   i = {
