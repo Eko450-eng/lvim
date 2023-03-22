@@ -4,8 +4,8 @@
 
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "nord"
 vim.opt.relativenumber = true
+lvim.colorscheme = "tokyonight"
 
 vim.opt.autoindent = true
 vim.opt.background = "dark"
@@ -13,6 +13,11 @@ vim.opt.belloff = "esc"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 1
 
+vim.api.nvim_set_hl(0, "ZenBg", { ctermbg = 0 })
+vim.cmd("autocmd VimEnter * hi ZenBg ctermbg=NONE guibg=NONE")
+vim.cmd("autocmd VimEnter * set scrolloff=999")
+
+lvim.builtin.theme.tokyonight = false
 
 lvim.use_icons = true
 lvim.transparent_window = true
@@ -27,18 +32,21 @@ lvim.leader = "space"
 lvim.builtin.which_key.mappings.f = nil
 lvim.builtin.which_key.mappings["/"] = nil
 lvim.keys.normal_mode["<leader>w"] = false
+lvim.keys.normal_mode["<leader>w"] = nil
 lvim.keys.normal_mode["<leader>fs"] = ":w<cr>"
 lvim.keys.normal_mode["<M-l>"] = "<cmd>BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<M-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<leader>bd"] = "<cmd>BufferKill<CR>"
+lvim.keys.normal_mode["<Leader>bD"] = ':%bd!|e #|bd #|normal`"<CR>'
 lvim.keys.normal_mode["<leader>wd"] = ":q<cr>"
-lvim.keys.normal_mode["<leader>gc"] = "<Plug>(comment_toggle_linewise_current)"
+lvim.keys.normal_mode["gc"] = "<Plug>(comment_toggle_linewise_current)"
 lvim.keys.normal_mode["<leader>bc"] = ":CBlbox<cr>"
 lvim.keys.normal_mode["<leader>E"] = ":Telescope find_files <CR>"
 lvim.keys.normal_mode["<leader>B"] = ":Telescope live_grep <CR>"
 
 lvim.keys.normal_mode["|"] = ":vsplit<cr>"
 lvim.keys.normal_mode["-"] = ":hsplit<cr>"
+
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ unmap a default keymapping                               │
@@ -59,8 +67,9 @@ lvim.keys.normal_mode["-"] = ":hsplit<cr>"
 --  ╰──────────────────────────────────────────────────────────╯
 local _, actions = pcall(require, "telescope.actions")
 
-require("telescope").load_extension "file_browser"
-require("telescope").load_extension "project"
+-- require("telescope").load_extension "file_browser"
+-- require("telescope").load_extension "project"
+require("luasnip/loaders/from_vscode").load { paths = { "~/.config/lvim/snippets/my-snippets" } }
 
 lvim.builtin.telescope.defaults.mappings = {
   i = {
@@ -85,14 +94,16 @@ lvim.builtin.telescope.defaults.mappings = {
 --  │  leader-key prefix                                       │
 --  ╰──────────────────────────────────────────────────────────╯
 -- lvim.builtin.which_key.mappings["R"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["g"] = {
-  name = "+Vimagit",
-  g = { ":Git<cr>", "Git" },
-  d = { ":DiffviewOpen<cr>", "Open" },
-  D = { ":DiffviewClose<cr>", "Close" },
-  p = { ":Git push<cr>", "Push" },
-  b = { ":Git branc<cr>", "branc" },
-}
+--
+
+-- lvim.builtin.which_key.mappings["r"] = {
+--   name = "+Vimagit",
+--   g = { ":Git<cr>", "Git" },
+--   d = { ":DiffviewOpen<cr>", "Open" },
+--   D = { ":DiffviewClose<cr>", "Close" },
+--   p = { ":Git push<cr>", "Push" },
+--   b = { ":Git branch<cr>", "branch" },
+-- }
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
@@ -219,7 +230,6 @@ lvim.plugins = {
   { 'LudoPinelli/comment-box.nvim' },
   { 'jreybert/vimagit' },
   { 'sindrets/diffview.nvim' },
-  { 'tpope/vim-fugitive' },
   { 'honza/vim-snippets' },
   { 'SirVer/ultisnips' },
   { 'arcticicestudio/nord-vim' },
@@ -235,10 +245,16 @@ lvim.plugins = {
   { 'ellisonleao/glow.nvim' },
   { 'lommix/godot.nvim' },
   { 'habamax/vim-godot' },
-  { 'neoclide/coc.nvim', },
   { 'nvim-telescope/telescope-file-browser.nvim' },
   { 'nvim-telescope/telescope-project.nvim' },
   { 'tom-anders/telescope-vim-bookmarks.nvim' },
+  { 'elkowar/yuck.vim' },
+  { 'folke/zen-mode.nvim' },
+  { 'smithbm2316/centerpad.nvim' },
+  { 'ggandor/leap.nvim' },
+  { 'norcalli/snippets.nvim' },
+  { 'Shougo/deoplete.nvim' },
+  { 'nyoom-engineering/nyoom.nvim' },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
@@ -250,16 +266,13 @@ lvim.plugins = {
 --  ╰──────────────────────────────────────────────────────────╯
 require('nvim-highlight-colors').setup {}
 require('nvim-ts-autotag').setup {}
+require("lspconfig").tsserver.setup {}
+require("leap").add_default_mappings()
 require("lspconfig").gdscript.setup {
   flags = {
     debounce_text_changes = 150,
   }
 }
-
-vim.lsp.start({
-  name = "godot",
-  cmd = vim.lsp.rpc.connect('127.0.0.1', 6008)
-})
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ Autocommands (https://neovim.io/doc/user/autocmd.html)   │

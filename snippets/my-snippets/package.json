@@ -1,0 +1,34 @@
+{
+  "name": "my-snippets",
+  "author": "Eko",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "typescriptreact",
+        "path": "./ts-react.json"
+      },
+      {
+        "language": "lua",
+        "path": "./lua.json"
+      },
+      {
+        "language": [
+          "jsonls",
+          "json",
+          "json-lsp"
+        ],
+        "path": "./j.json"
+      },
+      {
+        "language": [
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./typescript.json"
+      }
+    ]
+  }
+}

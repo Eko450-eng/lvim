@@ -1,0 +1,16 @@
+{
+  "React funtion component exported": {
+    "prefix": "refc",
+    "body": [
+      "",
+      "export default function ${TM_FILENAME_BASE}() {",
+      "\treturn (",
+      "\t<div>",
+      "\t\t${2}",
+      "\t</div>",
+      "\t)",
+      "}"
+    ],
+    "description": "React function component with export"
+  }
+}

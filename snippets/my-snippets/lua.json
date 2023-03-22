@@ -1,0 +1,9 @@
+{
+  "Icons for manifest": {
+    "prefix": "mplug",
+    "body": [
+      "{ '${1:user}/${2:repo}' },"
+    ],
+    "description": "Lunarvim plugins"
+  }
+}

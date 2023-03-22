@@ -1,0 +1,13 @@
+{
+  "Icons for manifest": {
+    "prefix": "icon",
+    "body": [
+      "{",
+      "\"src\": \"/LogoIcon-${1:size}\",",
+      "\"sizes\": \"${1}x${1}\",",
+      "\"type\": \"/image/png\"",
+      "},"
+    ],
+    "description": "React function component with export"
+  }
+}
