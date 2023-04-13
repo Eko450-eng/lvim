@@ -12,5 +12,14 @@
       "}"
     ],
     "description": "React function component with export"
+  },
+  {
+    "Redux useSelector": {
+      "prefix": "reduxsel",
+      "body": [
+        "const ${1} = useSelector((state: RootState)=>state.${2})"
+      ],
+      "description": "React function component with export"
+    }
   }
 }

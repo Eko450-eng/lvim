@@ -24,6 +24,11 @@ lvim.transparent_window = true
 
 vim.g.godot_executable = "/home/eko/appimg/Godot_v4.0-beta8_linux.x86_64"
 
+-- Config for postgres
+require("psql").setup({
+  database_name = "dnd",
+})
+
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ keymappings [view all the defaults by pressing <leader>Lk]│
 --  ╰──────────────────────────────────────────────────────────╯
@@ -39,14 +44,13 @@ lvim.keys.normal_mode["<M-h>"] = "<cmd>BufferLineCyclePrev<CR>"
 lvim.keys.normal_mode["<leader>bd"] = "<cmd>BufferKill<CR>"
 lvim.keys.normal_mode["<Leader>bD"] = ':%bd!|e #|bd #|normal`"<CR>'
 lvim.keys.normal_mode["<leader>wd"] = ":q<cr>"
-lvim.keys.normal_mode["gc"] = "<Plug>(comment_toggle_linewise_current)"
+-- lvim.keys.normal_mode["gc"] = "<Plug>(comment_toggle_linewise_current)"
 lvim.keys.normal_mode["<leader>bc"] = ":CBlbox<cr>"
 lvim.keys.normal_mode["<leader>E"] = ":Telescope find_files <CR>"
 lvim.keys.normal_mode["<leader>B"] = ":Telescope live_grep <CR>"
 
 lvim.keys.normal_mode["|"] = ":vsplit<cr>"
 lvim.keys.normal_mode["-"] = ":hsplit<cr>"
-
 
 --  ╭──────────────────────────────────────────────────────────╮
 --  │ unmap a default keymapping                               │
@@ -95,15 +99,6 @@ lvim.builtin.telescope.defaults.mappings = {
 --  ╰──────────────────────────────────────────────────────────╯
 -- lvim.builtin.which_key.mappings["R"] = { "<cmd>Telescope projects<CR>", "Projects" }
 --
-
--- lvim.builtin.which_key.mappings["r"] = {
---   name = "+Vimagit",
---   g = { ":Git<cr>", "Git" },
---   d = { ":DiffviewOpen<cr>", "Open" },
---   D = { ":DiffviewClose<cr>", "Close" },
---   p = { ":Git push<cr>", "Push" },
---   b = { ":Git branch<cr>", "branch" },
--- }
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
@@ -228,8 +223,6 @@ linters.setup {
 --  ╰──────────────────────────────────────────────────────────╯
 lvim.plugins = {
   { 'LudoPinelli/comment-box.nvim' },
-  { 'jreybert/vimagit' },
-  { 'sindrets/diffview.nvim' },
   { 'honza/vim-snippets' },
   { 'SirVer/ultisnips' },
   { 'arcticicestudio/nord-vim' },
@@ -255,6 +248,7 @@ lvim.plugins = {
   { 'norcalli/snippets.nvim' },
   { 'Shougo/deoplete.nvim' },
   { 'nyoom-engineering/nyoom.nvim' },
+  { 'mzarnitsa/psql' },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
